@@ -1,0 +1,182 @@
+﻿@Html.Partial("cabecera")
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Facturación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #eef2f7;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    header .summary {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .summary .item {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        flex: 1;
+    }
+
+    .item.total {
+        background-color: #d9edf7; /* Azul pastel */
+        border-left: 5px solid #5bc0de; /* Azul vivo */
+    }
+
+    .item.pending {
+        background-color: #f2dede; /* Rojo claro */
+        border-left: 5px solid #d9534f; /* Rojo oscuro */
+    }
+
+    .item.canceled {
+        background-color: #dff0d8; /* Verde claro */
+        border-left: 5px solid #5cb85c; /* Verde vivo */
+    }
+
+    .item.annulled {
+        background-color: #f7f7f9; /* Gris claro */
+        border-left: 5px solid #777; /* Gris oscuro */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        overflow: hidden;
+    }
+
+    thead {
+        background-color: #f5f5f5; /* Gris claro para encabezado */
+        color: #333;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 0.9rem;
+    }
+
+        .status.processing {
+            background-color: #ffc107; /* Amarillo */
+        }
+
+        .status.pending {
+            background-color: #d9534f; /* Rojo */
+        }
+
+        .status.approved {
+            background-color: #5cb85c; /* Verde */
+        }
+
+    .action-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+
+        .action-btn:hover {
+            background-color: #0056b3;
+        }
+</style>
+<body>
+    <div class="container">
+        <header>
+            <div class="summary">
+                <div class="item total">
+                    <p>Todos</p>
+                    <strong>S/. 37,248.27</strong>
+                </div>
+                <div class="item pending">
+                    <p>Pendiente</p>
+                    <strong>S/. 52,629.57</strong>
+                </div>
+                <div class="item canceled">
+                    <p>Cancelado Totalmente</p>
+                    <strong>S/. 15,381.30</strong>
+                </div>
+                <div class="item annulled">
+                    <p>Anulado</p>
+                    <strong>S/. 0.00</strong>
+                </div>
+            </div>
+        </header>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Estado Sunat</th>
+                    <th>F. Emisión/F. Vcto.</th>
+                    <th>Documento</th>
+                    <th>Cliente</th>
+                    <th>Forma Pago</th>
+                    <th>Usuario/Sucursal</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><button class="action-btn">+</button></td>
+                    <td><span class="status processing">Procesando</span></td>
+                    <td>11/11/2024</td>
+                    <td>F001-00001300</td>
+                    <td>Hh Global Marketing Services Peru S.A.C.</td>
+                    <td>Crédito 120 Días</td>
+                    <td>Diego Palomino / Sucursal Huachipa</td>
+                    <td>S/. -217.92</td>
+                    <td><span class="status pending">Pendiente</span></td>
+                </tr>
+                <tr>
+                    <td><button class="action-btn">+</button></td>
+                    <td><span class="status approved">Aprobado</span></td>
+                    <td>08/11/2024</td>
+                    <td>F001-00009819</td>
+                    <td>Leche Gloria S.A.</td>
+                    <td>Crédito 30 Días</td>
+                    <td>Diego Palomino / Sucursal Huachipa</td>
+                    <td>S/. 31,034.00</td>
+                    <td><span class="status approved">Aprobado</span></td>
+                </tr>
+                <!-- Más filas aquí -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

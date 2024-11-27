@@ -1,0 +1,253 @@
+﻿@{
+    ViewData["Title"] = "Página de Inicio";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/css/cabecera.css">
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Cabecera */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .left-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-button {
+            font-size: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Sidebar oculto por defecto */
+        .sidebar {
+            position: fixed; /* Fijo en la pantalla */
+            top: 20; /* Se asegura de estar en la parte superior */
+            left: -250px; /* Fuera de la pantalla inicialmente */
+            width: 250px;
+            height: 100%; /* Ocupa toda la altura de la ventana */
+            background-color: #f4f4f4;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            transition: left 0.3s ease-in-out;
+            z-index: 1000;
+            padding-top: 20px;
+        }
+
+        /* Lista del menú */
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .menu-list li {
+                padding: 15px 20px;
+                font-size: 16px;
+                color: #333;
+                border-bottom: 1px solid #ddd;
+                cursor: pointer;
+            }
+
+                .menu-list li:hover {
+                    background-color: #e0e0e0;
+                }
+
+        /* Cuando el menú está abierto */
+        .sidebar.open {
+            left: 0; /* Se despliega hacia la izquierda */
+        }
+
+        /* Estilo del slide */
+        .slide-container {
+            position: fixed; /* Fija el contenedor en la pantalla */
+            top: 100px; /* Ajusta este valor para colocarlo debajo de la cabecera */
+            left: 0;
+            width: 100%;
+            z-index: 500; /* Asegúrate de que quede por encima de otros elementos */
+        }
+
+        .slides {
+            display: flex;
+            width: 300%; /* Ajustar según la cantidad de slides */
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            flex: 1 0 100%; /* Ocupa todo el ancho del contenedor */
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+            .slide:nth-child(1) {
+                background-color: #007bff; /* Placeholder */
+            }
+
+            .slide:nth-child(2) {
+                background-color: #28a745; /* Placeholder */
+            }
+
+            .slide:nth-child(3) {
+                background-color: #dc3545; /* Placeholder */
+            }
+
+        .slide-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .slide-button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="left-section">
+            <!-- Menú hamburguesa -->
+            <button class="menu-button" onclick="toggleSidebar()">☰</button>
+            <!-- Logo con texto -->
+            <div class="logo">
+                <img src="~/videos-img/new_logo.png" alt="Logo">
+            </div>
+        </div>
+        <div class="header-title">
+            Hola @TempData["UserName"], Bienvenido a Simplifica
+        </div>
+        <div class="right-section">
+            <div class="user-profile">
+                <div class="avatar" title="@TempData["UserName"]">
+                    @if (TempData["UserName"] != null && TempData["UserName"].ToString().Length > 0)
+                    {
+                        @TempData["UserName"].ToString().Substring(0, 1).ToUpper()
+                    }
+                </div>
+                <span class="user-name">@TempData["UserName"]</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menú lateral -->
+    <div class="sidebar" id="sidebar">
+        <ul class="menu-list">
+            <li>Configuración del Salon</li>
+            <li>Configuración de lista de precios</li>
+            <li>Caja</li>
+            <li>Registro de comandas</li>
+            <li>Registro de Insumos</li>
+            <li>Registro de carta</li>
+            <li>Registro de combo</li>
+            <li>Vista de cocina</li>
+            <li><a href="@Url.Action("Facturacion", "Facturación")">Consulta de facturación</a></li>
+            <li>Reporte de ventas por mesero</li>
+            <li>Reporte de inventario</li>
+        </ul>
+    </div>
+
+    <!-- Contenedor del slide -->
+  
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open'); // Alterna la clase "open"
+        }
+
+        // Cierra el menú al hacer clic fuera de él
+        document.addEventListener('click', function (event) {
+            const sidebar = document.getElementById('sidebar');
+            if (!sidebar.contains(event.target) && !event.target.matches('.menu-button')) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Slide automático
+        let currentSlide = 0;
+        const slides = document.getElementById('slides');
+        const totalSlides = slides.children.length;
+
+        function showSlide(index) {
+            currentSlide = (index + totalSlides) % totalSlides; // Asegura el índice circular
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        setInterval(nextSlide, 5000); // Cambia de slide cada 5 segundos
+    </script>
+</body>
+</html>

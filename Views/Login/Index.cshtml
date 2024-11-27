@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+<body>
+    <div class="container">
+        <video autoplay muted loop class="background-video">
+            <source src="../videos-img/Portal_4K_Video.mp4" type="video/mp4">
+        </video>
+        <div class="login-card">
+            <!-- Contenido del login -->
+            <div class="logo">
+                <img src="~/videos-img/new_logo.png" alt="Logo">
+            </div>
+            <div class="user-avatar">
+                <img src="~/videos-img/avatar.png" alt="Avatar">
+            </div>
+            <form method="post" asp-action="Index">
+                <!-- Campo de usuario -->
+                <input type="text" name="usuario" placeholder="Usuario" required>
+
+                <!-- Campo de contraseña -->
+                <input type="password" name="clave" placeholder="Contraseña" required>
+
+                <div class="actions">
+                    <label><input type="checkbox"> Recordarme</label>
+                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                </div>
+                <button type="submit" class="login-button">Iniciar sesión</button>
+            </form>
+
+            <!-- Mensaje de error en caso de login incorrecto -->
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="error-message">
+                    <p>@ViewBag.ErrorMessage</p>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

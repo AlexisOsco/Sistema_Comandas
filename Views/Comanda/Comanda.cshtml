@@ -1,0 +1,310 @@
+﻿@Html.Partial("cabecera")
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Comanda</title>
+    <link rel="stylesheet" href="~/css/cabecera.css">
+    <style>
+        /* Estilos principales */
+        .body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            height: 93vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        /* Sección de productos */
+        .products {
+            flex: 2;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+        }
+
+        .products-header {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .products-header input, .products-header select {
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 1rem;
+            }
+
+        /* Sección de productos */
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 15px;
+            justify-content: flex-start;
+        }
+
+        .product-card {
+            width: 200px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .product-card img {
+                width: 100px;
+                height: 100px;
+                border-radius: 8px;
+                object-fit: cover;
+                margin-bottom: 10px;
+            }
+
+        .product-info h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .product-info p {
+            margin: 5px 0 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Sección de la orden */
+        .order {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+        }
+
+        .order-header {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .order-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        /* Aquí cambió de card a formato lista */
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            gap: 15px;
+        }
+
+            .order-item .quantity {
+                display: flex;
+                align-items: center;
+                justify-content: center; /* Esto centra los elementos dentro */
+                gap: 10px;
+            }
+
+                .order-item .quantity button {
+                    background: #007bff;
+                    color: #fff;
+                    border: none;
+                    padding: 5px 10px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+
+                    .order-item .quantity button:hover {
+                        background: #0056b3;
+                    }
+
+            .order-item .subtotal {
+                font-weight: bold;
+                color: #333;
+                font-size: 1.2rem;
+                margin-left: auto; /* Esto alinea el subtotal a la derecha */
+            }
+
+        .order-summary {
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+            .order-summary p {
+                margin: 0;
+                display: flex;
+                justify-content: space-between;
+                font-size: 1rem;
+            }
+
+            .order-summary .total {
+                font-size: 1.4rem;
+                font-weight: bold;
+                color: #333;
+            }
+
+            .order-summary p span {
+                font-weight: bold;
+            }
+
+        .order-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+            .order-actions button {
+                flex: 1;
+                margin: 0 5px;
+                padding: 10px;
+                border: none;
+                border-radius: 4px;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+
+            .order-actions .cancel-btn {
+                background: #f44336;
+                color: #fff;
+            }
+
+                .order-actions .cancel-btn:hover {
+                    background: #d32f2f;
+                }
+
+            .order-actions .checkout-btn {
+                background: #4caf50;
+                color: #fff;
+            }
+
+                .order-actions .checkout-btn:hover {
+                    background: #388e3c;
+                }
+    </style>
+
+</head>
+<body>
+    <div class="body">
+        <div class="container">
+            <!-- Sección de productos -->
+            <div class="products">
+                <div class="products-header">
+                    <input type="text" placeholder="Search products">
+                    <select>
+                        <option value="all">Category</option>
+                        <option value="pizza">Pizza</option>
+                        <option value="pasta">Pasta</option>
+                        <option value="dessert">Dessert</option>
+                    </select>
+                </div>
+                <div class="product-list">
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/60" alt="Product">
+                        <div class="product-info">
+                            <h4>Bufalina Pizza</h4>
+                            <p>$8.50 - $12.80</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/60" alt="Product">
+                        <div class="product-info">
+                            <h4>Caprese Pasta</h4>
+                            <p>$4.99</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/60" alt="Product">
+                        <div class="product-info">
+                            <h4>Margherita Pizza</h4>
+                            <p>$9.50</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/60" alt="Product">
+                        <div class="product-info">
+                            <h4>Spaghetti Bolognese</h4>
+                            <p>$7.99</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de la orden -->
+            <div class="order">
+                <div class="order-header">New Order</div>
+                <div class="order-list">
+                    <!-- Items de la orden, siguen en formato lista -->
+                    <div class="order-item">
+                        <div class="product-info">
+                            <h4>Caprese Pasta</h4>
+                            <p>$4.99</p>
+                        </div>
+                        <div class="quantity">
+                            <button>-</button>
+                            <span>2</span>
+                            <button>+</button>
+                        </div>
+                        <span class="subtotal">$9.98</span>
+                    </div>
+                    <div class="order-item">
+                        <div class="product-info">
+                            <h4>Italian Market</h4>
+                            <p>$12.80</p>
+                        </div>
+                        <div class="quantity">
+                            <button>-</button>
+                            <span>1</span>
+                            <button>+</button>
+                        </div>
+                        <span class="subtotal">$12.80</span>
+                    </div>
+                </div>
+                <div class="order-summary">
+                    <p>Subtotal: <span>$37.47</span></p>
+                    <p>Discounts: <span>-$0.30</span></p>
+                    <p>Tax (15%): <span>$5.58</span></p>
+                    <p class="total">Total: <span>$42.75</span></p>
+                </div>
+                <div class="order-actions">
+                    <button class="cancel-btn">Cancel</button>
+                    <button class="checkout-btn">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
