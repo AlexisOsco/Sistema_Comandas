@@ -1,1 +1,63 @@
 ﻿
+
+.cmp1 {
+    grid-area: cmp1;
+}
+
+.cmp2 {
+    grid-area: cmp2;
+}
+
+.cmp3 {
+    grid-area: cmp3;
+}
+
+.cmp4 {
+    grid-area: cmp4;
+}
+
+.cmp5 {
+    grid-area: cmp5;
+}
+
+.cmp6 {
+    grid-area: cmp6;
+}
+
+.cmp7 {
+    grid-area: cmp7;
+}
+
+.cmp8 {
+    grid-area: cmp8;
+}
+
+.cmp9 {
+    grid-area: cmp9;
+}
+
+.cmp10 {
+    grid-area: cmp10;
+}
+
+.w-75vw {
+    width: calc(75vw - 15px)
+}
+
+.w-100percent {
+    width: calc(100% - 15px);
+}
+
+.card {
+    background: white;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 15px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.p-15 {
+    padding: 15px;
+}

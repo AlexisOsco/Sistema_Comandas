@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="~/css/cabecera.css">
+	<script src="~/js/jquery-3.7.1.js"></script>
     <style>
         /* Estilos generales */
         body {
@@ -198,10 +199,10 @@
     <!-- Menú lateral -->
     <div class="sidebar" id="sidebar">
         <ul class="menu-list">
-            <li>Configuración del Salon</li>
+            <li><a href="@Url.Action("ConfigTienda", "ConfigTienda")">Configuración del Salon</a></li>
             <li>Configuración de lista de precios</li>
             <li>Caja</li>
-            <li>Registro de comandas</li>
+            <li><a href="@Url.Action("Comanda", "Comanda")">Registro de comandas</a></li>
             <li>Registro de Insumos</li>
             <li>Registro de carta</li>
             <li>Registro de combo</li>
