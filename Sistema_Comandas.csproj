@@ -11,11 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Inventario\" />
-    <Folder Include="Views\Caja\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\js\Comanda\Comanda_View.js" />
   </ItemGroup>
 
