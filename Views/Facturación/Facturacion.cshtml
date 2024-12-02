@@ -1,12 +1,16 @@
 ﻿@Html.Partial("cabecera")
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Facturación</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 </head>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -31,8 +35,9 @@
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        text-align: center;
+        text-align: left;
         flex: 1;
+        position: relative;
     }
 
     .item.total {
@@ -50,9 +55,43 @@
         border-left: 5px solid #5cb85c; /* Verde vivo */
     }
 
+    .item.partial {
+        background-color: #fcf8e3; /* Amarillo claro */
+        border-left: 5px solid #f0ad4e; /* Amarillo oscuro */
+    }
+
     .item.annulled {
         background-color: #f7f7f9; /* Gris claro */
         border-left: 5px solid #777; /* Gris oscuro */
+    }
+
+    .summary .item i {
+        font-size: 4rem;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        color: inherit;
+    }
+
+    .icon-world {
+        color: #007bff;
+    }
+
+    .icon-bars {
+        color: #d9534f;
+    }
+
+    .icon-check {
+        color: #5cb85c;
+    }
+
+    .icon-exclamation {
+        color: #f0ad4e;
+    }
+
+    .icon-ban {
+        color: #777;
     }
 
     table {
@@ -60,44 +99,65 @@
         border-collapse: collapse;
         background-color: #fff;
         border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         margin-top: 20px;
         overflow: hidden;
+        font-size: 0.85rem;
     }
 
     thead {
-        background-color: #f5f5f5; /* Gris claro para encabezado */
+        background-color: #bbe0ec;
         color: #333;
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: center;
-        border: 1px solid #ddd;
     }
 
     tbody tr:nth-child(even) {
         background-color: #f9f9f9;
     }
 
-    .status {
-        display: inline-block;
-        padding: 6px 10px;
-        border-radius: 4px;
-        color: #fff;
-        font-size: 0.9rem;
+    .facturacion-header {
+        background-color: #bbe0ec;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
     }
 
-        .status.processing {
-            background-color: #ffc107; /* Amarillo */
+        .facturacion-header table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        .status.pending {
-            background-color: #d9534f; /* Rojo */
+        .facturacion-header th {
+            text-align: left;
+            padding: 8px;
+            color: #333;
+            font-weight: bold;
+            text-transform: none;
+            white-space: nowrap; /* Impide el salto de línea inesperado */
+            font-size: 0.85rem;
         }
 
-        .status.approved {
-            background-color: #5cb85c; /* Verde */
+            .facturacion-header th div {
+                display: block;
+                text-align: center;
+            }
+
+    .facturacion-row {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+
+        .facturacion-row table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .facturacion-row td {
+            text-align: left;
+            padding: 8px;
+            font-size: 0.85rem;
+            color: #555;
         }
 
     .action-btn {
@@ -107,76 +167,150 @@
         padding: 5px 10px;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+    }
+
+        .action-btn:hover {
+            background-color: #0056b3;
+        }
+
+    /* Estados */
+    .status {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+    }
+
+        .status.processing {
+            background-color: #fbffcd; /* Amarillo */
+            color: #9fad06;
+        }
+
+        .status.pending {
+            background-color: #ffe9e4; /* Rojo */
+            color: #e64826;
+        }
+
+        .status.approved {
+            background-color: #bdf9a7; /* Verde */
+            color: #419c1f;
+        }
+
+    .action-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.85rem;
     }
 
         .action-btn:hover {
             background-color: #0056b3;
         }
 </style>
+
 <body>
     <div class="container">
         <header>
             <div class="summary">
                 <div class="item total">
                     <p>Todos</p>
-                    <strong>S/. 37,248.27</strong>
+                    <strong>S/. 37,248.27</strong><br>
+                    <strong>$ 19,143.64</strong>
+                    <i class="fas fa-globe icon-world"></i>
                 </div>
                 <div class="item pending">
                     <p>Pendiente</p>
-                    <strong>S/. 52,629.57</strong>
+                    <strong>S/. 52,629.57</strong><br>
+                    <strong>$ 26,987.13</strong>
+                    <i class="fas fa-bars icon-bars"></i>
                 </div>
                 <div class="item canceled">
                     <p>Cancelado Totalmente</p>
-                    <strong>S/. 15,381.30</strong>
+                    <strong>S/. 15,381.30</strong><br>
+                    <strong>$ 7,890.15</strong>
+                    <i class="fas fa-check icon-check"></i>
+                </div>
+                <div class="item partial">
+                    <p>Cancelado Parcialmente</p>
+                    <strong>S/. 0.00</strong><br>
+                    <strong>$ 0.00</strong>
+                    <i class="fas fa-exclamation icon-exclamation"></i>
                 </div>
                 <div class="item annulled">
                     <p>Anulado</p>
-                    <strong>S/. 0.00</strong>
+                    <strong>S/. 0.00</strong><br>
+                    <strong>$ 0.00</strong>
+                    <i class="fas fa-ban icon-ban"></i>
                 </div>
             </div>
         </header>
+        <div class="facturacion-header">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: auto;"><div>Acciones</div></th>
+                        <th style="width: auto;"><div>Estado Sunat</div></th>
+                        <th style="width: auto;"><div>F. Emisión/</div><div>F. Vcto.</div></th>
+                        <th style="width: auto;"><div>Documento</div></th>
+                        <th style="width: 15%;"><div>Cliente</div></th>
+                        <th style="width: auto;"><div>Forma</div><div>Pago</div></th>
+                        <th style="width: 15%;"><div>Usuario/</div><div>Sucursal</div></th>
+                        <th style="width: auto;"><div>Total</div></th>
+                        <th style="width: auto;"><div>Estado</div></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Acciones</th>
-                    <th>Estado Sunat</th>
-                    <th>F. Emisión/F. Vcto.</th>
-                    <th>Documento</th>
-                    <th>Cliente</th>
-                    <th>Forma Pago</th>
-                    <th>Usuario/Sucursal</th>
-                    <th>Total</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><button class="action-btn">+</button></td>
-                    <td><span class="status processing">Procesando</span></td>
-                    <td>11/11/2024</td>
-                    <td>F001-00001300</td>
-                    <td>Hh Global Marketing Services Peru S.A.C.</td>
-                    <td>Crédito 120 Días</td>
-                    <td>Diego Palomino / Sucursal Huachipa</td>
-                    <td>S/. -217.92</td>
-                    <td><span class="status pending">Pendiente</span></td>
-                </tr>
-                <tr>
-                    <td><button class="action-btn">+</button></td>
-                    <td><span class="status approved">Aprobado</span></td>
-                    <td>08/11/2024</td>
-                    <td>F001-00009819</td>
-                    <td>Leche Gloria S.A.</td>
-                    <td>Crédito 30 Días</td>
-                    <td>Diego Palomino / Sucursal Huachipa</td>
-                    <td>S/. 31,034.00</td>
-                    <td><span class="status approved">Aprobado</span></td>
-                </tr>
-                <!-- Más filas aquí -->
-            </tbody>
-        </table>
+
+        <div class="facturacion-row">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="width: 15%;">
+                            <button class="action-btn">+</button>
+                            <button class="action-btn">📄</button>
+                            <button class="action-btn">🔄</button>
+                        </td>
+                        <td style="width: 14%;"><span class="status processing">Procesando</span></td>
+                        <td style="width: 12%;">11/11/2024</td>
+                        <td style="width: 10%;">F001-00001300</td>
+                        <td style="width: 17%;">Hh Global Marketing Services Peru S.A.C.</td>
+                        <td style="width: 12%;">Crédito 120 Días</td>
+                        <td style="width: 12%;">Diego Palomino / Sucursal Huachipa</td>
+                        <td style="width: 15%;">S/. -217.92</td>
+                        <td style="width: 15%;"><span class="status pending">Pendiente</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="facturacion-row">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="width: 15%;">
+                            <button class="action-btn">+</button>
+                            <button class="action-btn">📄</button>
+                            <button class="action-btn">🔄</button>
+                        </td>
+                        <td style="width: 14%;"><span class="status approved">Aprobado</span></td>
+                        <td style="width: 12%;">08/11/2024</td>
+                        <td style="width: 12%;">F001-00009819</td>
+                        <td style="width: 15%;">Leche Gloria S.A.</td>
+                        <td style="width: 12%;">Crédito 30 Días</td>
+                        <td style="width: 12%;">Diego Palomino / Sucursal Huachipa</td>
+                        <td style="width: 8%;">S/. 31,034.00</td>
+                        <td style="width: 8%;"><span class="status approved">Aprobado</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </body>
+
 </html>
