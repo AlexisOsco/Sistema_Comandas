@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@Html.Partial("cabecera")
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -65,12 +66,12 @@
     }
 
     .summary .item i {
-        font-size: 4rem; 
+        font-size: 4rem;
         position: absolute;
         top: 50%;
-        right: 20px; 
-        transform: translateY(-50%); 
-        color: inherit; 
+        right: 20px;
+        transform: translateY(-50%);
+        color: inherit;
     }
 
     .icon-world {
@@ -92,6 +93,7 @@
     .icon-ban {
         color: #777;
     }
+
     table {
         width: 100%;
         border-collapse: collapse;
@@ -99,11 +101,11 @@
         border-radius: 8px;
         margin-top: 20px;
         overflow: hidden;
-        font-size: 0.85rem; 
+        font-size: 0.85rem;
     }
 
     thead {
-        background-color: #bbe0ec; 
+        background-color: #bbe0ec;
         color: #333;
     }
 
@@ -112,7 +114,7 @@
     }
 
     .facturacion-header {
-        background-color: #bbe0ec; 
+        background-color: #bbe0ec;
         padding: 10px;
         border-radius: 8px;
         margin-bottom: 10px;
@@ -128,9 +130,9 @@
             padding: 8px;
             color: #333;
             font-weight: bold;
-            text-transform: none; 
+            text-transform: none;
             white-space: nowrap; /* Impide el salto de línea inesperado */
-            font-size: 0.85rem; 
+            font-size: 0.85rem;
         }
 
             .facturacion-header th div {
@@ -153,7 +155,7 @@
 
         .facturacion-row td {
             text-align: left;
-            padding: 8px; 
+            padding: 8px;
             font-size: 0.85rem;
             color: #555;
         }
@@ -165,7 +167,7 @@
         padding: 5px 10px;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 0.85rem; 
+        font-size: 0.85rem;
     }
 
         .action-btn:hover {
@@ -250,11 +252,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th style="width: auto;"><div>Acciones</div></th> 
-                        <th style="width: auto;"><div>Estado Sunat</div></th> 
+                        <th style="width: auto;"><div>Acciones</div></th>
+                        <th style="width: auto;"><div>Estado Sunat</div></th>
                         <th style="width: auto;"><div>F. Emisión/</div><div>F. Vcto.</div></th>
-                        <th style="width: auto;"><div>Documento</div></th> 
-                        <th style="width: 15%;"><div>Cliente</div></th> 
+                        <th style="width: auto;"><div>Documento</div></th>
+                        <th style="width: 15%;"><div>Cliente</div></th>
                         <th style="width: auto;"><div>Forma</div><div>Pago</div></th>
                         <th style="width: 15%;"><div>Usuario/</div><div>Sucursal</div></th>
                         <th style="width: auto;"><div>Total</div></th>
@@ -264,7 +266,7 @@
             </table>
         </div>
 
-        
+
         <div class="facturacion-row">
             <table>
                 <tbody>
