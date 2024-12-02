@@ -1,25 +1,207 @@
 ﻿@Html.Partial("cabecera")
-
-<!-- Resto de tu contenido -->
-<div class="main-content">
-    
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Aplica el fondo a la sección que tiene la clase main-content */
-        .main-content {
-            background-image: url('/videos-img/background-inicio.png'); /* Ruta de la imagen */
-            background-size: 100%; /* Cambia el tamaño de la imagen de fondo al 50% */
-            background-position: center; /* Centra la imagen */
-            background-repeat: no-repeat; /* Evita que la imagen se repita */
-            height: 100vh; /* Ajusta la altura al 100% de la ventana */
-            width: 100%; /* Hace que el contenedor ocupe el 100% del ancho de la pantalla */
-            color: white; /* Cambia el color del texto si es necesario */
-            padding-top: 90px; /* Ajusta el padding superior si es necesario */
-            display: flex; /* Usado para centrar contenido */
-            flex-direction: column; /* Centra los elementos de arriba hacia abajo */
-            justify-content: center; 
-            align-items: center; 
-            padding-top: 80px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            grid-template-rows: repeat(2, 1fr); /* Asegura que las filas tengan un tamaño igual */
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .card h3 {
+            font-size: 1.2em;
+            margin: 0;
+        }
+
+        .card .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .card .content {
+            margin-top: 10px;
+            overflow: auto;
+        }
+
+        .time-chart {
+            height: 250px; /* Aseguramos que el gráfico tenga un tamaño adecuado */
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+
+        /* Estilo específico de colores y disposición */
+        .blue {
+            background-color: #4e73df;
+            color: white;
+        }
+
+        .orange {
+            background-color: #fd7e14;
+            color: white;
+        }
+
+        .green {
+            background-color: #1cc88a;
+            color: white;
+        }
+
+        .red {
+            background-color: #e74a3b;
+            color: white;
+        }
+
+        .purple {
+            background-color: #6f42c1;
+            color: white;
+        }
+
+        .pink {
+            background-color: #f9b3d1;
+            color: white;
+        }
+
+        .gradient {
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            color: white;
+        }
+
+        /* Card con fondo blanco y bordes sutiles */
+        .card-info {
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
     </style>
-    <!-- Más contenido aquí -->
-</div>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Últimas Actualizaciones -->
+        <div class="card blue">
+            <i class="fas fa-sync icon"></i>
+            <h3>Últimas Actualizaciones</h3>
+            <div class="card-info">
+                <p>Hace 3 años</p>
+                <p>Versión 20211216</p>
+                <ul>
+                    <li>Permite agregar la ficha de información del cliente</li>
+                    <li>Permite agregar el Asesor Comercial adicional</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tiempo en Pantalla (Gráfico) -->
+        <div class="card orange">
+            <i class="fas fa-desktop icon"></i>
+            <h3>Tiempo en Pantalla</h3>
+            <div class="card-info">
+                <canvas id="timeChart" class="time-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Notificaciones -->
+        <div class="card green">
+            <i class="fas fa-bell icon"></i>
+            <h3>Notificaciones</h3>
+            <div class="card-info">
+                <p>Aprobación de ingreso de solicitud</p>
+                <ul>
+                    <li>Crishian Lerris Cardenas - Pendiente</li>
+                    <li>Andrea Teresa Quispe - Pendiente</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Favoritos -->
+        <div class="card purple">
+            <i class="fas fa-star icon"></i>
+            <h3>Favoritos</h3>
+            <div class="card-info">
+                <ul>
+                    <li>Rol Funcional</li>
+                    <li>Usuario</li>
+                    <li>Facturación</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Historial de Conexiones -->
+        <div class="card pink">
+            <i class="fas fa-history icon"></i>
+            <h3>Historial de Conexiones</h3>
+            <div class="card-info">
+                <ul>
+                    <li>Inicio - 25/11/2024</li>
+                    <li>Facturación - 24/11/2024</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Notas -->
+        <div class="card gradient">
+            <i class="fas fa-file-alt icon"></i>
+            <h3>Notas</h3>
+            <div class="card-info">
+                <p>No tienes notas.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('timeChart').getContext('2d');
+        var timeChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                datasets: [{
+                    label: 'Horas en Pantalla',
+                    data: [2, 3, 5, 1, 7, 4, 3],
+                    backgroundColor: 'rgba(254, 150, 42, 0.5)',
+                    borderColor: 'rgba(254, 150, 42, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: {
+                            display: false // Quitamos las líneas del gráfico en el eje X para mejorar la visibilidad
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

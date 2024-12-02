@@ -6,9 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sistema de comandas</title>
     <link rel="stylesheet" href="~/css/cabecera.css">
-	<script src="~/js/jquery-3.7.1.js"></script>
+    <script src="~/js/jquery-3.7.1.js"></script>
     <style>
         /* Estilos generales */
         body {
@@ -24,7 +24,6 @@
             padding: 10px 20px;
             background-color: #f8f9fa;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
         }
 
         .left-section {
@@ -101,16 +100,27 @@
             margin: 0;
         }
 
+            /* Estilo para los elementos del menú */
             .menu-list li {
                 padding: 15px 20px;
                 font-size: 16px;
                 color: #333;
-                border-bottom: 1px solid #ddd;
+                border-bottom: 1px solid #ddd; /* Mantén el borde solo si lo necesitas */
                 cursor: pointer;
+                text-decoration: none; /* Elimina el subrayado */
+                transition: background-color 0.3s, color 0.3s; /* Transición para cambios de color */
             }
 
+                /* Efecto hover */
                 .menu-list li:hover {
-                    background-color: #e0e0e0;
+                    background-color: #d1008b; /* Magenta */
+                    color: white; /* Letras blancas */
+                }
+
+                /* Asegúrate de que los enlaces no tengan subrayado */
+                .menu-list li a {
+                    text-decoration: none; /* Elimina subrayado de los enlaces */
+                    color: inherit; /* Toma el color heredado del li */
                 }
 
         /* Cuando el menú está abierto */
@@ -214,7 +224,7 @@
     </div>
 
     <!-- Contenedor del slide -->
-  
+
 
     <script>
         function toggleSidebar() {
