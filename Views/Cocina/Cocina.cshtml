@@ -1,5 +1,120 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@Html.Partial("cabecera")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Comandas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<style>
+
+    /* Archivo: styles.css */
+    .body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        min-height: 100vh;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: nowrap; /* No se moverán a una nueva línea */
+        overflow-x: auto; /* Activar scroll horizontal */
+        gap: 20px;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .card {
+        flex: 0 0 300px; /* Cada tarjeta ocupa un ancho fijo */
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        border-top: 4px solid #ff6b6b;
+    }
+
+        .card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .card p {
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .card ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+            .card ul li {
+                background-color: #f4f4f4;
+                margin: 5px 0;
+                padding: 5px;
+                border-radius: 4px;
+            }
+
+    /* Estilo para el scroll horizontal */
+    .container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .container::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 4px;
+    }
+
+        .container::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
+
+</style>
+<div class="body">
+    <div class="container">
+        <div class="card">
+            <h3>Comanda #101</h3>
+            <p><strong>Platos:</strong></p>
+            <ul>
+                <li>Spaghetti Bolognese</li>
+                <li>Caesar Salad</li>
+                <li>Tiramisu</li>
+            </ul>
+            <p><strong>Mesa:</strong> 5</p>
+            <p><strong>Mesero:</strong> Juan Pérez</p>
+        </div>
+        <div class="card">
+            <h3>Comanda #102</h3>
+            <p><strong>Platos:</strong></p>
+            <ul>
+                <li>Pizza Margarita</li>
+                <li>Sopa de Tomate</li>
+                <li>Gelato</li>
+            </ul>
+            <p><strong>Mesa:</strong> 3</p>
+            <p><strong>Mesero:</strong> María López</p>
+        </div>
+        <div class="card">
+            <h3>Comanda #103</h3>
+            <p><strong>Platos:</strong></p>
+            <ul>
+                <li>Ensalada Griega</li>
+                <li>Paella</li>
+                <li>Flan</li>
+            </ul>
+            <p><strong>Mesa:</strong> 7</p>
+            <p><strong>Mesero:</strong> Carlos Ruiz</p>
+        </div>
+    </div>
+</div>
+</html>

@@ -1,5 +1,380 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@Html.Partial("cabecera")
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Ventas por Mesero</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .botones-superiores {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+            .botones-superiores button {
+                border: none;
+                border-radius: 5px;
+                padding: 8px 12px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+        #actualizar {
+            background-color: #d0ebff;
+            color: #0077b6;
+        }
+
+            #actualizar:hover {
+                background-color: #a8d9ff;
+            }
+
+        #filtros {
+            background-color: #6c757d;
+            color: white;
+        }
+
+            #filtros:hover {
+                background-color: #5a6268;
+            }
+
+        #agregar {
+            background-color: #d0a3cf;
+            color: #7f00b2;
+        }
+
+            #agregar:hover {
+                background-color: #b988b8;
+            }
+
+        table {
+            width: calc(100% - 200px);
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #DDEBF9;
+            font-weight: bold;
+        }
+
+        .estado-activo {
+            color: #379C79;
+            background-color: #C7EEE1;
+            border-radius: 7px;
+            padding: 10px 20px;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+            .pagination button {
+                padding: 8px 12px;
+                background-color: #d0ebff;
+                color: black;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+                .pagination button:hover {
+                    background-color: #a8d9ff;
+                }
+
+            .pagination select {
+                padding: 8px 12px;
+                font-size: 14px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                background-color: #fff;
+                cursor: pointer;
+            }
+
+        .pagination-info {
+            font-size: 14px;
+            margin: 0 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            overflow: auto;
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+        .modal input,
+        .modal select {
+            width: 90%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal button {
+            padding: 8px 12px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .modal button:hover {
+                background-color: #5a6268;
+            }
+    </style>
+</head>
+<body>
+    <div class="botones-superiores">
+        <button id="actualizar">Actualizar</button>
+        <button id="filtros">Filtros</button>
+        <button id="agregar">Importar</button>
+    </div>
+
+    <div class="body">
+        <h1>Reporte de Ventas por Mesero</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha Emisión</th>
+                    <th>Tipo Documento</th>
+                    <th>Número de Documento</th>
+                    <th>Cliente</th>
+                    <th>Total en Soles</th>
+                    <th>Total en Dólares</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-body"></tbody>
+        </table>
+        <div class="pagination">
+            <div>
+                <button id="prev-page">Ant</button>
+                <span class="pagination-info" id="page-info"></span>
+                <button id="next-page">Sig</button>
+            </div>
+            <div>
+                <label for="rows-per-page">Registros:</label>
+                <select id="rows-per-page">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50" selected>50</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Modal para filtros -->
+        <div id="filtroModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Filtrar Reporte de Ventas</h2>
+                <label for="filtro-cliente">Cliente:</label>
+                <input type="text" id="filtro-cliente" placeholder="Nombre del Cliente...">
+
+                <label for="filtro-fecha">Fecha:</label>
+                <input type="date" id="filtro-fecha">
+
+                <label for="filtro-tipo-doc">Tipo de Documento:</label>
+                <select id="filtro-tipo-doc">
+                    <option value="Factura">Factura</option>
+                    <option value="Boleta">Boleta</option>
+                </select>
+
+                <button id="aplicar-filtro">Aplicar Filtro</button>
+            </div>
+        </div>
+
+        <!-- Modal para agregar nuevo registro -->
+        <div id="agregarModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Agregar Venta</h2>
+                <label for="agregar-fecha">Fecha Emisión:</label>
+                <input type="date" id="agregar-fecha">
+
+                <label for="agregar-tipo-doc">Tipo Documento:</label>
+                <select id="agregar-tipo-doc">
+                    <option value="Factura">Factura</option>
+                    <option value="Boleta">Boleta</option>
+                </select>
+
+                <label for="agregar-num-doc">Número Documento:</label>
+                <input type="text" id="agregar-num-doc" placeholder="Serie y Correlativo">
+
+                <label for="agregar-cliente">Cliente:</label>
+                <input type="text" id="agregar-cliente" placeholder="Nombre del Cliente">
+
+                <label for="agregar-total-soles">Total en Soles:</label>
+                <input type="number" id="agregar-total-soles" placeholder="Total en Soles">
+
+                <label for="agregar-total-dolares">Total en Dólares:</label>
+                <input type="number" id="agregar-total-dolares" placeholder="Total en Dólares">
+
+                <button id="guardar-agregar">Guardar</button>
+            </div>
+        </div>
+
+        <script>
+            const datos = [
+                { fecha: "2024-12-01", tipoDoc: "Factura", numDoc: "F001-001", cliente: "Juan Pérez", totalSoles: 1000, totalDolares: 270 },
+                { fecha: "2024-12-02", tipoDoc: "Boleta", numDoc: "B001-002", cliente: "María Gómez", totalSoles: 800, totalDolares: 215 },
+                { fecha: "2024-12-01", tipoDoc: "Factura", numDoc: "F001-001", cliente: "Juan Pérez", totalSoles: 1000, totalDolares: 270 },
+                { fecha: "2024-12-02", tipoDoc: "Boleta", numDoc: "B001-002", cliente: "María Gómez", totalSoles: 800, totalDolares: 215 },
+                { fecha: "2024-12-03", tipoDoc: "Factura", numDoc: "F002-001", cliente: "Carlos Ruiz", totalSoles: 1200, totalDolares: 325 },
+                { fecha: "2024-12-04", tipoDoc: "Boleta", numDoc: "B002-003", cliente: "Ana López", totalSoles: 750, totalDolares: 200 },
+                { fecha: "2024-12-05", tipoDoc: "Factura", numDoc: "F003-004", cliente: "Luis Martínez", totalSoles: 1500, totalDolares: 400 },
+                { fecha: "2024-12-06", tipoDoc: "Boleta", numDoc: "B003-005", cliente: "Pedro Sánchez", totalSoles: 650, totalDolares: 175 },
+                { fecha: "2024-12-07", tipoDoc: "Factura", numDoc: "F004-006", cliente: "Lucía González", totalSoles: 1100, totalDolares: 295 },
+                { fecha: "2024-12-08", tipoDoc: "Boleta", numDoc: "B004-007", cliente: "Ricardo Díaz", totalSoles: 900, totalDolares: 240 },
+                { fecha: "2024-12-09", tipoDoc: "Factura", numDoc: "F005-008", cliente: "Javier López", totalSoles: 2000, totalDolares: 540 },
+                { fecha: "2024-12-10", tipoDoc: "Boleta", numDoc: "B005-009", cliente: "Valeria Vargas", totalSoles: 950, totalDolares: 255 }
+                // Otros datos aquí...
+            ];
+
+            let page = 1;
+            let rowsPerPage = 50;
+            let filteredData = [...datos];
+
+            function renderTable() {
+                const startIndex = (page - 1) * rowsPerPage;
+                const endIndex = startIndex + rowsPerPage;
+                const paginatedData = filteredData.slice(startIndex, endIndex);
+                const tableBody = document.getElementById("tabla-body");
+                tableBody.innerHTML = "";
+                paginatedData.forEach(item => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                                    <td>${item.fecha}</td>
+                                    <td>${item.tipoDoc}</td>
+                                    <td>${item.numDoc}</td>
+                                    <td>${item.cliente}</td>
+                                    <td>${item.totalSoles}</td>
+                                    <td>${item.totalDolares}</td>
+                                `;
+                    tableBody.appendChild(row);
+                });
+                document.getElementById("page-info").textContent = `Página ${page} de ${Math.ceil(filteredData.length / rowsPerPage)}`;
+            }
+
+            document.getElementById("prev-page").addEventListener("click", () => {
+                if (page > 1) {
+                    page--;
+                    renderTable();
+                }
+            });
+
+            document.getElementById("next-page").addEventListener("click", () => {
+                if (page < Math.ceil(filteredData.length / rowsPerPage)) {
+                    page++;
+                    renderTable();
+                }
+            });
+
+            document.getElementById("rows-per-page").addEventListener("change", (e) => {
+                rowsPerPage = parseInt(e.target.value, 10);
+                renderTable();
+            });
+
+            // Filtros Modal
+            const filtroModal = document.getElementById("filtroModal");
+            const filtrosBtn = document.getElementById("filtros");
+            const closeModalBtns = document.querySelectorAll(".close");
+
+            filtrosBtn.onclick = () => {
+                filtroModal.style.display = "block";
+            };
+
+            closeModalBtns.forEach(btn => {
+                btn.onclick = () => {
+                    filtroModal.style.display = "none";
+                };
+            });
+
+            document.getElementById("aplicar-filtro").addEventListener("click", () => {
+                const clienteFiltro = document.getElementById("filtro-cliente").value.toLowerCase();
+                const fechaFiltro = document.getElementById("filtro-fecha").value;
+                const tipoDocFiltro = document.getElementById("filtro-tipo-doc").value;
+
+                filteredData = datos.filter(item => {
+                    return (
+                        (!clienteFiltro || item.cliente.toLowerCase().includes(clienteFiltro)) &&
+                        (!fechaFiltro || item.fecha === fechaFiltro) &&
+                        (!tipoDocFiltro || item.tipoDoc === tipoDocFiltro)
+                    );
+                });
+
+                page = 1; // Reiniciar a la primera página después de aplicar filtro
+                renderTable();
+                filtroModal.style.display = "none";
+            });
+
+            renderTable();
+        </script>
+    </div>
+</body>
+</html>

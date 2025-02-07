@@ -9,208 +9,226 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-</head>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #eef2f7;
-    }
-
-    .container {
-        padding: 20px;
-    }
-
-    header .summary {
-        display: flex;
-        gap: 20px;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
-
-    .summary .item {
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        text-align: left;
-        flex: 1;
-        position: relative;
-    }
-
-    .item.total {
-        background-color: #d9edf7; /* Azul pastel */
-        border-left: 5px solid #5bc0de; /* Azul vivo */
-    }
-
-    .item.pending {
-        background-color: #f2dede; /* Rojo claro */
-        border-left: 5px solid #d9534f; /* Rojo oscuro */
-    }
-
-    .item.canceled {
-        background-color: #dff0d8; /* Verde claro */
-        border-left: 5px solid #5cb85c; /* Verde vivo */
-    }
-
-    .item.partial {
-        background-color: #fcf8e3; /* Amarillo claro */
-        border-left: 5px solid #f0ad4e; /* Amarillo oscuro */
-    }
-
-    .item.annulled {
-        background-color: #f7f7f9; /* Gris claro */
-        border-left: 5px solid #777; /* Gris oscuro */
-    }
-
-    .summary .item i {
-        font-size: 4rem;
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        color: inherit;
-    }
-
-    .icon-world {
-        color: #007bff;
-    }
-
-    .icon-bars {
-        color: #d9534f;
-    }
-
-    .icon-check {
-        color: #5cb85c;
-    }
-
-    .icon-exclamation {
-        color: #f0ad4e;
-    }
-
-    .icon-ban {
-        color: #777;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: #fff;
-        border-radius: 8px;
-        margin-top: 20px;
-        overflow: hidden;
-        font-size: 0.85rem;
-    }
-
-    thead {
-        background-color: #bbe0ec;
-        color: #333;
-    }
-
-    tbody tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    .facturacion-header {
-        background-color: #bbe0ec;
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-    }
-
-        .facturacion-header table {
-            width: 100%;
-            border-collapse: collapse;
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f7;
         }
 
-        .facturacion-header th {
+        .container {
+            padding: 20px;
+        }
+
+        header .summary {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .summary .item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             text-align: left;
-            padding: 8px;
-            color: #333;
-            font-weight: bold;
-            text-transform: none;
-            white-space: nowrap; /* Impide el salto de línea inesperado */
+            flex: 1;
+            position: relative;
+        }
+
+        .item.total {
+            background-color: #d9edf7;
+            border-left: 5px solid #5bc0de;
+            color: #5bc0de;
+        }
+
+        .item.pending {
+            background-color: #f2dede;
+            border-left: 5px solid #d9534f;
+            color: #d9534f;
+        }
+
+        .item.canceled {
+            background-color: #dff0d8;
+            border-left: 5px solid #5cb85c;
+            color: #5cb85c;
+        }
+
+        .item.partial {
+            background-color: #fcf8e3;
+            border-left: 5px solid #f0ad4e;
+            color: #f0ad4e;
+        }
+
+        .item.annulled {
+            background-color: #f7f7f9;
+            border-left: 5px solid #777;
+            color: #777;
+        }
+
+        .summary .item i {
+            font-size: 4rem;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            color: inherit;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-top: 20px;
+            overflow: hidden;
             font-size: 0.85rem;
         }
 
-            .facturacion-header th div {
-                display: block;
-                text-align: center;
+        thead {
+            background-color: #d9edf7;
+            color: #333;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .facturacion-header {
+            background-color: #d9edf7;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+            .facturacion-header table {
+                width: 100%;
+                border-collapse: collapse;
             }
 
-    .facturacion-row {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
-        padding: 10px;
-    }
+            .facturacion-header th {
+                text-align: left;
+                padding: 8px;
+                color: #333;
+                font-weight: bold;
+                text-transform: none;
+                white-space: nowrap;
+                font-size: 0.85rem;
+            }
 
-        .facturacion-row table {
-            width: 100%;
-            border-collapse: collapse;
+        .facturacion-row {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            padding: 10px;
         }
 
-        .facturacion-row td {
-            text-align: left;
-            padding: 8px;
+            .facturacion-row table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .facturacion-row td {
+                text-align: left;
+                padding: 8px;
+                font-size: 0.85rem;
+                color: #555;
+            }
+
+        .action-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
             font-size: 0.85rem;
-            color: #555;
         }
 
-    .action-btn {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.85rem;
-    }
+            .action-btn:hover {
+                background-color: #0056b3;
+            }
 
-        .action-btn:hover {
-            background-color: #0056b3;
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
         }
 
-    /* Estados */
-    .status {
-        display: inline-block;
-        padding: 6px 10px;
-        border-radius: 4px;
-        font-size: 0.85rem;
-    }
-
-        .status.processing {
-            background-color: #fbffcd; /* Amarillo */
-            color: #9fad06;
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            border-radius: 8px;
         }
 
-        .status.pending {
-            background-color: #ffe9e4; /* Rojo */
-            color: #e64826;
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
         }
 
-        .status.approved {
-            background-color: #bdf9a7; /* Verde */
-            color: #419c1f;
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
-    .action-btn {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.85rem;
-    }
-
-        .action-btn:hover {
-            background-color: #0056b3;
+        .modal button[type="submit"] {
+            background-color: #6c757d; /* Color negro pastel */
+            color: white; /* Letras blancas */
+            padding: 8px 20px; /* Acomodo vertical */
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
         }
-</style>
+
+            .modal button[type="submit"]:hover {
+                background-color: #5a6268; /* Color ligeramente más oscuro al pasar el ratón */
+            }
+
+        /* Estilo del botón al lado de los cards */
+        .action-btn {
+            background-color: #6c757d; /* Color negro pastel */
+            color: white;
+            border: none;
+            padding: 4px 10px; /* Reducción de tamaño vertical */
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+            .action-btn:hover {
+                background-color: #5a6268; /* Color más oscuro al pasar el ratón */
+            }
+    </style>
+</head>
 
 <body>
     <div class="container">
@@ -246,6 +264,7 @@
                     <strong>$ 0.00</strong>
                     <i class="fas fa-ban icon-ban"></i>
                 </div>
+                <button class="action-btn" id="openModalBtn">Filtrar</button>
             </div>
         </header>
         <div class="facturacion-header">
@@ -266,13 +285,12 @@
             </table>
         </div>
 
-
         <div class="facturacion-row">
             <table>
                 <tbody>
                     <tr>
                         <td style="width: 15%;">
-                            <button class="action-btn">+</button>
+                            <button class="action-btn" id="openModalBtn">+</button>
                             <button class="action-btn">📄</button>
                             <button class="action-btn">🔄</button>
                         </td>
@@ -288,29 +306,66 @@
                 </tbody>
             </table>
         </div>
-        <div class="facturacion-row">
-            <table>
-                <tbody>
-                    <tr>
-                        <td style="width: 15%;">
-                            <button class="action-btn">+</button>
-                            <button class="action-btn">📄</button>
-                            <button class="action-btn">🔄</button>
-                        </td>
-                        <td style="width: 14%;"><span class="status approved">Aprobado</span></td>
-                        <td style="width: 12%;">08/11/2024</td>
-                        <td style="width: 12%;">F001-00009819</td>
-                        <td style="width: 15%;">Leche Gloria S.A.</td>
-                        <td style="width: 12%;">Crédito 30 Días</td>
-                        <td style="width: 12%;">Diego Palomino / Sucursal Huachipa</td>
-                        <td style="width: 8%;">S/. 31,034.00</td>
-                        <td style="width: 8%;"><span class="status approved">Aprobado</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
     </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Filtrar Factura</h2>
+            <form>
+                <label for="cliente">Cliente:</label>
+                <input type="text" id="cliente" name="cliente" required>
+
+                <label for="fechaEmision">Fecha de Emisión:</label>
+                <input type="date" id="fechaEmision" name="fechaEmision" required>
+
+                <label for="numeroDocumento">Número de Documento:</label>
+                <input type="text" id="numeroDocumento" name="numeroDocumento" required>
+
+                <label for="usuario">Usuario:</label>
+                <input type="text" id="usuario" name="usuario" required>
+
+                <label for="estado">Estado:</label>
+                <select id="estado" name="estado" required>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="procesando">Procesando</option>
+                    <option value="completado">Completado</option>
+                </select>
+
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // Obtener el modal
+        var modal = document.getElementById("myModal");
+
+        // Obtener el botón que abre el modal
+        var btn = document.getElementById("openModalBtn");
+
+        // Obtener el <span> que cierra el modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Cuando el usuario haga clic en el botón, abrir el modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // Cuando el usuario haga clic en <span> (x), cerrar el modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // Cuando el usuario haga clic fuera del modal, cerrarlo
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>

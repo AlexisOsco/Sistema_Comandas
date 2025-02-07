@@ -142,5 +142,242 @@
             </div>
         </div>
     </div>
+
+
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close {
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+            .form-grid div {
+                display: flex;
+                flex-direction: column;
+            }
+
+        input, select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+            .calculator button {
+                padding: 10px;
+                background: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+        .actions {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+            .actions button {
+                background-color: #77dd77; /* Verde pastel */
+                color: white;
+                padding: 12px 24px;
+                font-size: 18px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+                .actions button:hover {
+                    background-color: #66cc66; /* Verde un poco más oscuro */
+                    transform: translateY(-2px); /* Efecto de elevación al hacer hover */
+                }
+
+                .actions button:active {
+                    transform: translateY(2px); /* Efecto de presionado */
+                }
+
+
+
+    </style>
+
+    <!-- Modal de Cobranza -->
+    <div id="checkoutModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Cobranza</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form>
+                <div class="form-grid">
+                    <div>
+                        <label for="documento">Documento</label>
+                        <select id="documento">
+                            <option value="boleta">Boleta de Venta</option>
+                            <option value="factura">Factura</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="cliente">Cliente</label>
+                        <input type="text" id="cliente" value="000000000 - Público General" readonly>
+                    </div>
+                    <div>
+                        <label for="serie">Serie</label>
+                        <input type="text" id="serie" value="B099" readonly>
+                    </div>
+                    <div>
+                        <label for="fecha">Fecha</label>
+                        <input type="date" id="fecha" value="2024-12-02" readonly>
+                    </div>
+                    <div>
+                        <label for="vendedor">Vendedor</label>
+                        <input type="text" id="vendedor" value="Carlos Fernandez" readonly>
+                    </div>
+                    <div>
+                        <label for="contacto">Contacto</label>
+                        <select id="contacto">
+                            <option value="ninguno">Seleccione</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="total">Total a Cobrar</label>
+                        <input type="text" id="total" value="S/ 40.00" readonly>
+                    </div>
+                    <div>
+                        <label for="pendiente">Pendiente por Cobrar</label>
+                        <input type="text" id="pendiente" value="S/ 40.00" readonly>
+                    </div>
+                    <div>
+                        <label for="efectivo">Efectivo Recibido</label>
+                        <input type="number" id="efectivo" placeholder="S/ 0.00">
+                    </div>
+                    <div>
+                        <label for="cambio">Vuelto a Entregar</label>
+                        <input type="text" id="cambio" readonly placeholder="S/ 0.00">
+                    </div>
+                    <div>
+                        <label for="tipoCambio">Tipo Cambio Paralelo</label>
+                        <input type="text" id="tipoCambio" value="3.7590" readonly>
+                    </div>
+                    <div>
+                        <label for="formaPago">Forma de Pago</label>
+                        <select id="formaPago">
+                            <option value="efectivo">Efectivo</option>
+                            <option value="tarjeta">Tarjeta</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="calculator">
+                    <button type="button" onclick="addNumber(7)">7</button>
+                    <button type="button" onclick="addNumber(8)">8</button>
+                    <button type="button" onclick="addNumber(9)">9</button>
+                    <button type="button" onclick="addNumber(4)">4</button>
+                    <button type="button" onclick="addNumber(5)">5</button>
+                    <button type="button" onclick="addNumber(6)">6</button>
+                    <button type="button" onclick="addNumber(1)">1</button>
+                    <button type="button" onclick="addNumber(2)">2</button>
+                    <button type="button" onclick="addNumber(3)">3</button>
+                    <button type="button" onclick="addNumber(0)">0</button>
+                    <button type="button" onclick="clearInput()">C</button>
+                    <button type="button" onclick="addDecimal()">.</button>
+                </div>
+                <div class="actions">
+                    <button type="button" onclick="processPayment()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        // Abrir el modal
+        document.querySelector('.checkout-btn').addEventListener('click', function () {
+            document.getElementById('checkoutModal').style.display = 'flex';
+        });
+
+        // Cerrar el modal
+        function closeModal() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        // Procesar el pago
+        function processPayment() {
+            const total = parseFloat(document.getElementById('total').value.replace('S/', ''));
+            const efectivo = parseFloat(document.getElementById('efectivo').value || 0);
+            const cambio = efectivo - total;
+
+            if (cambio < 0) {
+                alert('Monto recibido insuficiente.');
+            } else {
+                document.getElementById('cambio').value = `S/ ${cambio.toFixed(2)}`;
+                alert('Pago procesado con éxito');
+                closeModal();
+            }
+        }
+
+        // Calculadora funcional
+        function addNumber(num) {
+            const input = document.getElementById('efectivo');
+            input.value = (input.value || '') + num;
+        }
+
+        function clearInput() {
+            document.getElementById('efectivo').value = '';
+        }
+
+        function addDecimal() {
+            const input = document.getElementById('efectivo');
+            if (!input.value.includes('.')) {
+                input.value += '.';
+            }
+        }
+
+
+    </script>
+
 </body>
 </html>

@@ -4,11 +4,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link href="~/css/cabecera.css" rel="stylesheet" />
-    <script src="~/js/jquery-3.7.1.js"></script>
+    <title>Reporte de Inventario</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .botones-superiores {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+            .botones-superiores button {
+                border: none;
+                border-radius: 5px;
+                padding: 8px 12px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+        #actualizar {
+            background-color: #d0ebff;
+            color: #0077b6;
+        }
+
+            #actualizar:hover {
+                background-color: #a8d9ff;
+            }
+
+        #filtros {
+            background-color: #6c757d;
+            color: white;
+        }
+
+            #filtros:hover {
+                background-color: #5a6268;
+            }
+
+        table {
+            width: calc(100% - 200px);
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #DDEBF9;
+            font-weight: bold;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+            .pagination button {
+                padding: 8px 12px;
+                background-color: #d0ebff;
+                color: black;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+        .pagination-info {
+            font-size: 14px;
+            margin: 0 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            overflow: auto;
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+        .modal input,
+        .modal select {
+            width: 90%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal button {
+            padding: 8px 12px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .modal button:hover {
+                background-color: #5a6268;
+            }
+    </style>
 </head>
 <body>
+    <div class="botones-superiores">
+        <button id="actualizar">Actualizar</button>
+        <button id="filtros">Filtros</button>
+    </div>
 
+    <div class="body">
+        <h1>Reporte de Inventario</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha Movimiento</th>
+                    <th>Insumo</th>
+                    <th>Cantidad Entradas</th>
+                    <th>Cantidad Salidas</th>
+                    <th>Saldo</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-body"></tbody>
+        </table>
+        <div class="pagination">
+            <div>
+                <button id="prev-page">Ant</button>
+                <span class="pagination-info" id="page-info"></span>
+                <button id="next-page">Sig</button>
+            </div>
+        </div>
+
+        <!-- Modal para filtros -->
+        <div id="filtroModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Filtrar Inventario</h2>
+                <label for="filtro-insumo">Insumo:</label>
+                <input type="text" id="filtro-insumo" placeholder="Ej: Cebolla">
+
+                <label for="filtro-fecha">Fecha Movimiento:</label>
+                <input type="date" id="filtro-fecha">
+
+                <button id="aplicar-filtro">Aplicar Filtro</button>
+            </div>
+        </div>
+
+        <script>
+            const datos = [
+                { fecha: "2024-12-01", insumo: "Cebolla", entradas: 100, salidas: 50, saldo: 50 },
+                { fecha: "2024-12-01", insumo: "Tomate", entradas: 150, salidas: 100, saldo: 50 },
+                { fecha: "2024-12-02", insumo: "Cebolla", entradas: 200, salidas: 80, saldo: 120 },
+                { fecha: "2024-12-02", insumo: "Zanahoria", entradas: 90, salidas: 30, saldo: 60 },
+                { fecha: "2024-12-03", insumo: "Pimiento", entradas: 75, salidas: 25, saldo: 50 },
+                { fecha: "2024-12-03", insumo: "Cebolla", entradas: 120, salidas: 60, saldo: 60 },
+                { fecha: "2024-12-03", insumo: "Ajo", entradas: 50, salidas: 20, saldo: 30 },
+                { fecha: "2024-12-04", insumo: "Papas", entradas: 300, salidas: 150, saldo: 150 },
+                { fecha: "2024-12-04", insumo: "Zanahoria", entradas: 60, salidas: 30, saldo: 30 },
+                { fecha: "2024-12-05", insumo: "Tomate", entradas: 250, salidas: 200, saldo: 50 },
+                { fecha: "2024-12-05", insumo: "Lechuga", entradas: 80, salidas: 40, saldo: 40 },
+                { fecha: "2024-12-06", insumo: "Cebolla", entradas: 100, salidas: 60, saldo: 40 },
+                { fecha: "2024-12-06", insumo: "Ajo", entradas: 60, salidas: 20, saldo: 40 },
+                { fecha: "2024-12-07", insumo: "Papas", entradas: 400, salidas: 200, saldo: 200 },
+                { fecha: "2024-12-07", insumo: "Pimiento", entradas: 100, salidas: 50, saldo: 50 },
+                { fecha: "2024-12-08", insumo: "Tomate", entradas: 300, salidas: 250, saldo: 50 },
+                { fecha: "2024-12-08", insumo: "Zanahoria", entradas: 120, salidas: 60, saldo: 60 },
+                { fecha: "2024-12-09", insumo: "Lechuga", entradas: 100, salidas: 50, saldo: 50 },
+                { fecha: "2024-12-09", insumo: "Cebolla", entradas: 150, salidas: 70, saldo: 80 },
+                { fecha: "2024-12-10", insumo: "Ajo", entradas: 90, salidas: 30, saldo: 60 },
+                { fecha: "2024-12-10", insumo: "Papas", entradas: 500, salidas: 300, saldo: 200 }
+            ];
+
+            let page = 1;
+            let rowsPerPage = 5;
+            let filteredData = [...datos];
+
+            function renderTable() {
+                const startIndex = (page - 1) * rowsPerPage;
+                const endIndex = startIndex + rowsPerPage;
+                const paginatedData = filteredData.slice(startIndex, endIndex);
+                const tableBody = document.getElementById("tabla-body");
+                tableBody.innerHTML = "";
+                paginatedData.forEach(item => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                                                <td>${item.fecha}</td>
+                                                <td>${item.insumo}</td>
+                                                <td>${item.entradas}</td>
+                                                <td>${item.salidas}</td>
+                                                <td>${item.saldo}</td>
+                                            `;
+                    tableBody.appendChild(row);
+                });
+                document.getElementById("page-info").textContent = `Página ${page} de ${Math.ceil(filteredData.length / rowsPerPage)}`;
+            }
+
+            document.getElementById("prev-page").addEventListener("click", () => {
+                if (page > 1) {
+                    page--;
+                    renderTable();
+                }
+            });
+
+            document.getElementById("next-page").addEventListener("click", () => {
+                if (page < Math.ceil(filteredData.length / rowsPerPage)) {
+                    page++;
+                    renderTable();
+                }
+            });
+
+            // Filtros Modal
+            const filtroModal = document.getElementById("filtroModal");
+            const filtrosBtn = document.getElementById("filtros");
+            const closeModalBtns = document.querySelectorAll(".close");
+
+            filtrosBtn.addEventListener("click", () => {
+                filtroModal.style.display = "block";
+            });
+
+            closeModalBtns.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    filtroModal.style.display = "none";
+                });
+            });
+
+            window.addEventListener("click", (event) => {
+                if (event.target === filtroModal) {
+                    filtroModal.style.display = "none";
+                }
+            });
+
+            document.getElementById("aplicar-filtro").addEventListener("click", () => {
+                const insumoFiltro = document.getElementById("filtro-insumo").value.toLowerCase();
+                const fechaFiltro = document.getElementById("filtro-fecha").value;
+
+                filteredData = datos.filter(item => {
+                    return (
+                        (!insumoFiltro || item.insumo.toLowerCase().includes(insumoFiltro)) &&
+                        (!fechaFiltro || item.fecha === fechaFiltro)
+                    );
+                });
+
+                page = 1;
+                renderTable();
+                filtroModal.style.display = "none";
+            });
+
+            renderTable();
+        </script>
+    </div>
 </body>
 </html>
